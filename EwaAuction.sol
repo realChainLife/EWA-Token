@@ -9,8 +9,8 @@ contract DutchAuction {
      * Auction for the EWA Token.
      *
      * Terminology:
-     * 1 token unit = Rei
-     * 1 token = EWA = Rei * token_multiplier
+     * 1 token unit = Wei
+     * 1 token = EWA = Wei * token_multiplier
      * token_multiplier set from token's number of decimals (i.e. 10 ** decimals)
      */
 
