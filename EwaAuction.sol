@@ -19,7 +19,7 @@ contract DutchAuction {
 
     // Bid value over which the address has to be whitelisted
     // At deployment moment, less than 1k$
-    uint constant public bid_threshold = 2.5 ether;
+    uint constant public bid_threshold = 0.5 ether;
 
     /*
      * Storage
