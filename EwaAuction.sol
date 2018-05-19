@@ -1,6 +1,6 @@
 pragma solidity ^0.4.19;
 
-import './EwaToken.sol';
+import "./EwaToken";
 
 /// @title Dutch auction contract - distribution of a fixed number of tokens using an auction.
 /// The auction ends if a fixed number of tokens was sold.
