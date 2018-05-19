@@ -15,7 +15,7 @@ contract DutchAuction {
      */
 
     // Wait 14 days after the end of the auction, before anyone can claim tokens
-    uint constant public token_claim_waiting_period = 7 days;
+    uint constant public token_claim_waiting_period = 14 days;
 
     // Bid value over which the address has to be whitelisted
     // At deployment moment, less than 1k$
