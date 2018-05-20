@@ -1,6 +1,6 @@
 pragma solidity ^0.4.19;
 
-import './ERC223ReceivingContract1.sol';
+import "./ERC223ReceivingContract1.sol";
 
 /// @title Base Token contract - Functions to be implemented by token contracts.
 contract EwaToken {
