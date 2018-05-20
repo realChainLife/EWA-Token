@@ -132,7 +132,7 @@ contract StandardToken is EwaToken {
         balances[_from] -= _value;
         allowed[_from][msg.sender] -= _value;
 
-        Transfer(_from, _to, _value);
+        emit Transfer(_from, _to, _value);
 
         return true;
     }
@@ -146,7 +146,7 @@ contract StandardToken is EwaToken {
         require(_spender != 0x0);
 
         allowed[msg.sender][_spender] = _value;
-        Approval(msg.sender, _spender, _value);
+        emit Approval(msg.sender, _spender, _value);
         return true;
     }
 
@@ -159,7 +159,7 @@ contract StandardToken is EwaToken {
     /// @param _spender Address of token spender.
     /// @return Returns remaining allowance for spender.
     function allowance(address _owner, address _spender)
-        constant
+        view
         public
         returns (uint256)
     {
