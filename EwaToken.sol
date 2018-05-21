@@ -54,7 +54,7 @@ contract StandardToken is EwaToken {
     /*
      * Data structures
      */
-    mapping (address => uint256) balances;
+    mapping (address => uint256) balanceOf;
     mapping (address => mapping (address => uint256)) allowed;
 
     /*
@@ -68,11 +68,11 @@ contract StandardToken is EwaToken {
     function transfer(address _to, uint256 _value) public returns (bool) {
         require(_to != 0x0);
         require(_to != address(this));
-        require(balances[msg.sender] >= _value);
-        require(balances[_to] + _value >= balances[_to]);
+        require(balanceOf[msg.sender] >= _value);
+        require(balanceOf[_to] + _value >= balanceOf[_to]);
 
-        balances[msg.sender] -= _value;
-        balances[_to] += _value;
+        balanceOf[msg.sender] -= _value;
+        balanceOf[_to] += _value;
 
         emit Transfer(msg.sender, _to, _value);
 
@@ -124,12 +124,12 @@ contract StandardToken is EwaToken {
         require(_from != 0x0);
         require(_to != 0x0);
         require(_to != address(this));
-        require(balances[_from] >= _value);
+        require(balanceOf[_from] >= _value);
         require(allowed[_from][msg.sender] >= _value);
-        require(balances[_to] + _value >= balances[_to]);
+        require(balanceOf[_to] + _value >= balanceOf[_to]);
 
-        balances[_to] += _value;
-        balances[_from] -= _value;
+        balanceOf[_to] += _value;
+        balanceOf[_from] -= _value;
         allowed[_from][msg.sender] -= _value;
 
         emit Transfer(_from, _to, _value);
@@ -170,7 +170,7 @@ contract StandardToken is EwaToken {
     /// @param _owner Address of token owner.
     /// @return Returns balance of owner.
     function balanceOf(address _owner) constant public returns (uint256) {
-        return balances[_owner];
+        return balanceOf[_owner];
     }
 }
 
@@ -224,15 +224,15 @@ contract Token is EwaToken {
         // Total supply of Rei at deployment
         totalSupply = initial_supply;
 
-        balances[auction_address] = initial_supply / 2;
-        balances[wallet_address] = initial_supply / 2;
+        balanceOf[auction_address] = initial_supply / 2;
+        balanceOf[wallet_address] = initial_supply / 2;
 
-        emit Transfer(0x0, auction_address, balances[auction_address]);
-        emit Transfer(0x0, wallet_address, balances[wallet_address]);
+        emit Transfer(0x0, auction_address, balanceOf[auction_address]);
+        emit Transfer(0x0, wallet_address, balanceOf[wallet_address]);
 
         Deployed(totalSupply);
 
-        assert(totalSupply == balances[auction_address] + balances[wallet_address]);
+        assert(totalSupply == balanceOf[auction_address] + balanceOf[wallet_address]);
     }
 
     /// @notice Allows `msg.sender` to simply destroy `num` token units (Rei). This means the total
@@ -241,17 +241,17 @@ contract Token is EwaToken {
     /// @param num Number of token units (Rei) to burn.
     function burn(uint num) public {
         require(num > 0);
-        require(balances[msg.sender] >= num);
+        require(balanceOf[msg.sender] >= num);
         require(totalSupply >= num);
 
-        uint pre_balance = balances[msg.sender];
+        uint pre_balance = balanceOf[msg.sender];
 
-        balances[msg.sender] -= num;
+        balanceOf[msg.sender] -= num;
         totalSupply -= num;
         Burnt(msg.sender, num, totalSupply);
         emit Transfer(msg.sender, 0x0, num);
 
-        assert(balances[msg.sender] == pre_balance - num);
+        assert(balanceOf[msg.sender] == pre_balance - num);
     }
 
 }
