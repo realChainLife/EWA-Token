@@ -176,7 +176,7 @@ contract StandardToken is EwaToken {
 
 
 /// @title EwaToken
-contract Token is StandardToken {
+contract Token is EwaToken {
 
     /*
      *  Terminology:
@@ -188,7 +188,7 @@ contract Token is StandardToken {
     /*
      *  Token metadata
      */
-    string constant public name = "Ewa Token";
+    string constant public name = "EwaToken";
     string constant public symbol = "EWA";
     uint8 constant public decimals = 18;
     uint constant multiplier = 10 ** uint(decimals);
