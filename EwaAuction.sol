@@ -225,7 +225,7 @@ contract DutchAuction {
         // Reminder: num_tokens_auctioned is the number of Rei (EWA * token_multiplier) that are auctioned
         final_price = token_multiplier * received_wei / num_tokens_auctioned;
 
-        end_time = now;
+        end_time = block;
         stage = Stages.AuctionEnded;
         emit AuctionEnded(final_price);
 
