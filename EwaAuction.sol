@@ -207,7 +207,7 @@ contract DutchAuction {
     /// @dev Starts auction and sets start_time.
     function startAuction() public isOwner atStage(Stages.AuctionSetUp) {
         stage = Stages.AuctionStarted;
-        start_time = now;
+        start_time = block;
         start_block = block.number;
         emit AuctionStarted(start_time, start_block);
     }
