@@ -1,6 +1,6 @@
 pragma solidity ^0.4.19;
 
-import './EwaAuction.sol';
+import "./EwaAuction.sol";
 
 /// @title Distributor contract - distribution of tokens after an auction has ended.
 /// @dev Distibution is best one week to two weeks after auction.
