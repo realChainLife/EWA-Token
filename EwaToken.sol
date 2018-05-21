@@ -169,7 +169,7 @@ contract StandardToken is EwaToken {
     /// @dev Returns number of tokens owned by the given address.
     /// @param _owner Address of token owner.
     /// @return Returns balance of owner.
-    function balanceOf(address _owner) constant public returns (uint256) {
+     balanceOf(address _owner) view public returns (uint256) {
         return balanceOf[_owner];
     }
 }
@@ -230,7 +230,7 @@ contract Token is EwaToken {
         emit Transfer(0x0, auction_address, balanceOf[auction_address]);
         emit Transfer(0x0, wallet_address, balanceOf[wallet_address]);
 
-        Deployed(totalSupply);
+        emit Deployed(totalSupply);
 
         assert(totalSupply == balanceOf[auction_address] + balanceOf[wallet_address]);
     }
@@ -248,7 +248,7 @@ contract Token is EwaToken {
 
         balanceOf[msg.sender] -= num;
         totalSupply -= num;
-        Burnt(msg.sender, num, totalSupply);
+        emit Burnt(msg.sender, num, totalSupply);
         emit Transfer(msg.sender, 0x0, num);
 
         assert(balanceOf[msg.sender] == pre_balance - num);
