@@ -227,8 +227,8 @@ contract Token is StandardToken {
         balances[auction_address] = initial_supply / 2;
         balances[wallet_address] = initial_supply / 2;
 
-        Transfer(0x0, auction_address, balances[auction_address]);
-        Transfer(0x0, wallet_address, balances[wallet_address]);
+        emit Transfer(0x0, auction_address, balances[auction_address]);
+        emit Transfer(0x0, wallet_address, balances[wallet_address]);
 
         Deployed(totalSupply);
 
@@ -249,7 +249,7 @@ contract Token is StandardToken {
         balances[msg.sender] -= num;
         totalSupply -= num;
         Burnt(msg.sender, num, totalSupply);
-        Transfer(msg.sender, 0x0, num);
+        emit Transfer(msg.sender, 0x0, num);
 
         assert(balances[msg.sender] == pre_balance - num);
     }
