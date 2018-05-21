@@ -282,7 +282,7 @@ contract DutchAuction {
         // Waiting period after the end of the auction, before anyone can claim tokens
         // Ensures enough time to check if auction was finalized correctly
         // before users start transacting tokens
-        require(now > end_time + token_claim_waiting_period);
+        require(block > end_time + token_claim_waiting_period);
         require(receiver_address != 0x0);
 
         if (bids[receiver_address] == 0) {
@@ -308,13 +308,13 @@ contract DutchAuction {
 
         require(token.transfer(receiver_address, num));
 
-        ClaimedTokens(receiver_address, num);
+        emit ClaimedTokens(receiver_address, num);
 
         // After the last tokens are claimed, we change the auction stage
         // Due to the above logic, rounding errors will not be an issue
         if (funds_claimed == received_wei) {
             stage = Stages.TokensDistributed;
-            TokensDistributed();
+            emit TokensDistributed();
         }
 
         assert(token.balanceOf(receiver_address) >= num);
@@ -327,7 +327,7 @@ contract DutchAuction {
     /// Returns `price_start` before auction has started.
     /// @dev Calculates the current EWA token price in WEI.
     /// @return Returns WEI per EWA (token_multiplier * Rei).
-    function price() public constant returns (uint) {
+    function price() public view returns (uint) {
         if (stage == Stages.AuctionEnded ||
             stage == Stages.TokensDistributed) {
             return 0;
@@ -339,7 +339,7 @@ contract DutchAuction {
     /// calculated at the current EWA price in WEI.
     /// @dev The missing funds amount necessary to end the auction at the current EWA price in WEI.
     /// @return Returns the missing funds amount in WEI.
-    function missingFundsToEndAuction() constant public returns (uint) {
+    function missingFundsToEndAuction() view public returns (uint) {
 
         // num_tokens_auctioned = total number of Rei (EWA * token_multiplier) that is auctioned
         uint required_wei_at_price = num_tokens_auctioned * price() / token_multiplier;
@@ -363,10 +363,10 @@ contract DutchAuction {
     /// in the beginning; these spikes decrease over time and are noticeable
     /// only in first hours. This should be calculated before usage.
     /// @return Returns the token price - Wei per EWA.
-    function calcTokenPrice() constant private returns (uint) {
+    function calcTokenPrice() view private returns (uint) {
         uint elapsed;
         if (stage == Stages.AuctionStarted) {
-            elapsed = now - start_time;
+            elapsed = block - start_time;
         }
 
         uint decay_rate = elapsed ** price_exponent / price_constant;
