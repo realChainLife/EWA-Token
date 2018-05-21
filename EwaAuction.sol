@@ -139,7 +139,7 @@ contract DutchAuction {
         owner_address = msg.sender;
         stage = Stages.AuctionDeployed;
         changeSettings(_price_start, _price_constant, _price_exponent);
-        Deployed(_price_start, _price_constant, _price_exponent);
+        emit Deployed(_price_start, _price_constant, _price_exponent);
     }
 
     /// @dev Fallback function for the contract, which calls bid() if the auction has started.
@@ -161,7 +161,7 @@ contract DutchAuction {
         token_multiplier = 10 ** uint(18);
 
         stage = Stages.AuctionSetUp;
-        Setup();
+        emit Setup();
     }
 
     /// @notice Set `_price_start`, `_price_constant` and `_price_exponent` as
