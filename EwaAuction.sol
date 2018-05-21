@@ -209,7 +209,7 @@ contract DutchAuction {
         stage = Stages.AuctionStarted;
         start_time = now;
         start_block = block.number;
-        AuctionStarted(start_time, start_block);
+        emit AuctionStarted(start_time, start_block);
     }
 
     /// @notice Finalize the auction - sets the final EWA token price and changes the auction
@@ -227,7 +227,7 @@ contract DutchAuction {
 
         end_time = now;
         stage = Stages.AuctionEnded;
-        AuctionEnded(final_price);
+        emit AuctionEnded(final_price);
 
         assert(final_price > 0);
     }
@@ -259,7 +259,7 @@ contract DutchAuction {
         // Send bid amount to wallet
         wallet_address.transfer(msg.value);
 
-        BidSubmission(msg.sender, msg.value, missing_funds);
+        emit BidSubmission(msg.sender, msg.value, missing_funds);
 
         assert(received_wei >= msg.value);
     }
